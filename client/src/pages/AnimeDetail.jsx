@@ -126,9 +126,13 @@ const AnimeDetail = () => {
             {/* Genres */}
             <div className="flex flex-wrap gap-2 justify-center md:justify-start">
                 {anime.genres.map((genre) => (
-                    <span key={genre.mal_id} className="px-3 py-1 bg-slate-800 text-slate-300 text-xs font-semibold rounded-full border border-slate-700">
+                    <Badge 
+                        key={genre.mal_id} 
+                        variant="secondary" // The secondary variant is soft gray, perfect for dark mode
+                        className="px-3 py-1 text-xs hover:bg-indigo-500 hover:text-white transition-colors cursor-default"
+                    >
                         {genre.name}
-                    </span>
+                    </Badge>
                 ))}
             </div>
 
