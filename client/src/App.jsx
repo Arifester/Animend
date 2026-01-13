@@ -1,24 +1,18 @@
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import AnimeCard from "@/components/AnimeCard"
+import Navbar from "@/components/Navbar"
 
 function App() {
   const currentYear = new Date().getFullYear();
-  
-  // State untuk menyimpan data anime
   const [topAnime, setTopAnime] = useState([]);
-  // State untuk status loading
   const [loading, setLoading] = useState(true);
 
-  // useEffect berjalan sekali saat halaman pertama kali dimuat
   useEffect(() => {
     const fetchTopAnime = async () => {
       try {
-        // Request ke Jikan API (Top Anime)
-        const response = await fetch('https://api.jikan.moe/v4/top/anime?limit=8');
+        const response = await fetch('https://api.jikan.moe/v4/top/anime?limit=10'); // Limit naikin dikit jadi 10 biar pas gridnya
         const data = await response.json();
-        
-        // Simpan data hasil fetch ke state
         setTopAnime(data.data);
         setLoading(false);
       } catch (error) {
@@ -26,36 +20,50 @@ function App() {
         setLoading(false);
       }
     };
-
     fetchTopAnime();
   }, []);
 
   return (
-    <div className="flex min-h-screen flex-col items-center bg-slate-950 text-slate-50 px-4 py-12">
+    <div className="min-h-screen bg-slate-950 text-slate-50 font-sans selection:bg-indigo-500/30">
       
-      {/* Header Section */}
-      <header className="text-center space-y-4 max-w-lg mb-12">
-        <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
-          Animend<span className="text-indigo-500">.</span>
-        </h1>
-        <p className="text-slate-400 text-base leading-relaxed">
-          Discover your next favorite anime using advanced AI recommendations.
-        </p>
-      </header>
+      <Navbar />
 
-      {/* Content Section: Grid Anime */}
-      <main className="w-full max-w-5xl">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-bold text-slate-200">Top Trending</h2>
-          <Button variant="link" className="text-indigo-400 p-0">View All</Button>
+      {/* Hero Section */}
+      <div className="flex flex-col items-center px-4 pt-32 pb-12 text-center max-w-3xl mx-auto space-y-6">
+        
+        {/* Headline*/}
+        <h1 className="text-4xl md:text-6xl font-bold tracking-tight">
+          Discover Your Next <span className="text-indigo-500">Favorite</span>
+        </h1>
+        
+        {/* Subheadline*/}
+        <p className="text-slate-400 text-lg leading-relaxed max-w-xl">
+          Powered by Jikan API & Machine Learning to provide the best anime recommendations tailored just for you.
+        </p>
+      </div>
+
+      {/* Content Section */}
+      <main className="px-6 pb-20 max-w-7xl mx-auto">
+        <div className="flex justify-between items-end mb-8 border-b border-slate-800 pb-4">
+          <div>
+            {/* Sub-judul section*/}
+            <h2 className="text-2xl font-bold text-slate-100">Top Trending</h2>
+            <p className="text-slate-500 text-sm mt-1">Most popular anime right now</p>
+          </div>
+          <Button variant="outline" className="border-slate-800 text-slate-400 hover:text-slate-100 hover:bg-slate-900">
+            View All
+          </Button>
         </div>
 
         {loading ? (
-          // Tampilan saat Loading (Simple Text dulu)
-          <div className="text-center py-20 text-slate-500">Loading anime data...</div>
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6 animate-pulse">
+             {[...Array(10)].map((_, i) => (
+                <div key={i} className="aspect-[3/4] bg-slate-900 rounded-md"></div>
+             ))}
+          </div>
         ) : (
-          // Tampilan Grid Anime
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+          // Grid responsif: Mobile 2 kolom, Tablet 3/4, Desktop 5
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
             {topAnime.map((anime) => (
               <AnimeCard 
                 key={anime.mal_id}
@@ -68,9 +76,9 @@ function App() {
         )}
       </main>
       
-      <footer className="mt-20 text-center">
-        <p className="text-xs text-slate-600 font-medium tracking-wide">
-          &copy; {currentYear} Animend — Intelligent Anime Discovery
+      <footer className="py-8 text-center border-t border-slate-900">
+        <p className="text-xs text-slate-600 font-medium tracking-widest uppercase">
+          &copy; {currentYear} Animend Project
         </p>
       </footer>
     </div>
