@@ -21,7 +21,7 @@ const Navbar = () => {
         
         {/* Logo */}
         <Link to="/" className="text-xl font-bold tracking-tight text-slate-100 cursor-pointer flex-shrink-0">
-          Animend<span className="text-indigo-500">.</span>
+          Animend
         </Link>
 
         {/* Search Bar (Middle/Right) */}
