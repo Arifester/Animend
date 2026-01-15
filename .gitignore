@@ -19,6 +19,9 @@ build/
 .env
 .env.*
 
+# Prisma generated files
+/generated/prisma/
+
 # Local
 *.local
 
