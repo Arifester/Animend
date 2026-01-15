@@ -1,0 +1,2 @@
+# Animend
+Animend is an intelligent anime discovery platform currently in active development, designed to provide seamless exploration and personalized tracking. This portfolio project leverages a modern architecture, featuring a responsive frontend built with **React**, **Vite**, **Tailwind CSS v4**, and **Shadcn/ui**, integrated with the **Jikan API**. The backend infrastructure utilizes **Node.js**, **Express**, and **Prisma ORM** with **MongoDB Atlas**, with ongoing implementation focused on secure authentication and future machine learning integration.
