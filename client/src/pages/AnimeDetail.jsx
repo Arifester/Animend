@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { useAuth } from "@/context/AuthContext" // Import Auth Hook
+import { useAuth } from "@/context/AuthContext"
 
 const AnimeDetail = () => {
   const { id } = useParams();

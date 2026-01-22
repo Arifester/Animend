@@ -3,6 +3,8 @@ import Navbar from "@/components/Navbar"
 import Home from "@/pages/Home"
 import AnimeDetail from "@/pages/AnimeDetail"
 import Search from "@/pages/Search"
+import Login from "@/pages/Login"
+import Register from "@/pages/Register"
 
 function App() {
   const currentYear = new Date().getFullYear();
@@ -18,6 +20,10 @@ function App() {
         <Route path="/anime/:id" element={<AnimeDetail />} />
 
         <Route path="/search/:query" element={<Search />} />
+        
+        {/* Auth Routes */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
       
       <footer className="py-8 text-center border-t border-slate-900 mt-auto">
