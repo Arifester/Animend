@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react"
-import { useParams, Link } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import { useAuth } from "@/context/AuthContext" // Import Auth Hook
 
 const AnimeDetail = () => {
   const { id } = useParams();
   const [anime, setAnime] = useState(null);
   const [loading, setLoading] = useState(true);
+  const { token } = useAuth(); // Get token to check login status
 
   useEffect(() => {
     const fetchAnimeDetail = async () => {
@@ -27,6 +29,41 @@ const AnimeDetail = () => {
     // Scroll up when changing pages
     window.scrollTo(0, 0);
   }, [id]);
+
+  // Function to handle adding to Wishlist
+  const handleAddToWishlist = async () => {
+    if (!token) {
+        alert("Please login first to save this anime!");
+        return;
+    }
+
+    try {
+        const response = await fetch("http://localhost:5000/api/anime/wishlist", {
+            method: "POST",
+            headers: { 
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                animeId: anime.mal_id,
+                title: anime.title,
+                image: anime.images.webp.large_image_url,
+                score: anime.score
+            }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            alert("Success! Added to your wishlist.");
+        } else {
+            alert(data.message || "Failed to add.");
+        }
+    } catch (error) {
+        console.error("Wishlist error:", error);
+        alert("Something went wrong.");
+    }
+  };
 
   // Loading View
   if (loading) {
@@ -55,7 +92,7 @@ const AnimeDetail = () => {
             className="absolute inset-0 bg-cover bg-center blur-xl opacity-50 scale-110"
             style={{ backgroundImage: `url(${anime.images.webp.large_image_url})` }}
         ></div>
-        <div className="absolute inset-0 bg-linear-to-t from-slate-950 via-slate-950/60 to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent"></div>
       </div>
 
       {/* --- CONTENT CONTAINER --- */}
@@ -63,7 +100,7 @@ const AnimeDetail = () => {
         <div className="flex flex-col md:flex-row gap-8">
           
           {/* LEFT COLUMN: POSTER & INFO */}
-          <div className="shrink-0 mx-auto md:mx-0 w-64 md:w-72 space-y-6">
+          <div className="flex-shrink-0 mx-auto md:mx-0 w-64 md:w-72 space-y-6">
             {/* Poster Image */}
             <div className="rounded-lg overflow-hidden shadow-2xl shadow-indigo-500/20 border border-slate-800">
               <img 
@@ -75,7 +112,10 @@ const AnimeDetail = () => {
 
             {/* Action Buttons */}
             <div className="grid grid-cols-1 gap-3">
-              <Button className="w-full bg-indigo-600 hover:bg-indigo-700 font-bold">
+              <Button 
+                onClick={handleAddToWishlist} 
+                className="w-full bg-indigo-600 hover:bg-indigo-700 font-bold"
+              >
                 Add to Wishlist
               </Button>
               <Button variant="outline" className="w-full border-slate-700 hover:bg-slate-800 text-slate-300">
