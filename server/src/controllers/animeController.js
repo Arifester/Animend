@@ -53,4 +53,30 @@ const getWishlist = async (req, res) => {
     }
 };
 
-module.exports = { addToWishlist, getWishlist };
+/**
+ * Remove an anime from the user's wishlist
+ */
+const removeFromWishlist = async (req, res) => {
+    const { animeId } = req.params; // Get ID from URL
+    const userId = req.userId;
+
+    try {
+        const result = await prisma.wishlistItem.deleteMany({
+            where: {
+                userId: userId,
+                animeId: parseInt(animeId)
+            }
+        });
+
+        if (result.count === 0) {
+            return res.status(404).json({ message: "Item not found in your wishlist." });
+        }
+
+        res.json({ message: "Removed from wishlist successfully." });
+    } catch (error) {
+        console.error("Delete Error:", error);
+        res.status(500).json({ message: "Failed to remove item." });
+    }
+};
+
+module.exports = { addToWishlist, getWishlist, removeFromWishlist };
