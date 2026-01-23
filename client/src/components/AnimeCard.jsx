@@ -6,7 +6,7 @@ const AnimeCard = ({ id, title, image, score }) => {
     <Link to={`/anime/${id}`}>
       <Card className="overflow-hidden border-none shadow-none bg-transparent group cursor-pointer transition-all hover:scale-105">
         <CardContent className="p-0 relative rounded-md overflow-hidden">
-          <div className="aspect-[3/4] w-full relative">
+          <div className="aspect-3/4 w-full relative">
             <img 
               src={image} 
               alt={title} 
