@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import AnimeCard from "@/components/AnimeCard"
+import { Link } from "react-router-dom"
 
 const Home = () => {
   const [topAnime, setTopAnime] = useState([]);
@@ -40,15 +41,18 @@ const Home = () => {
             <h2 className="text-2xl font-bold text-slate-100">Top Trending</h2>
             <p className="text-slate-500 text-sm mt-1">Most popular anime right now</p>
           </div>
-          <Button variant="outline" className="bg-slate-800/50 text-slate-200 hover:bg-slate-700 hover:text-white border-none">
-            View All
-          </Button>
+          
+          <Link to="/search/tv">
+            <Button variant="outline" className="bg-slate-800/50 text-slate-200 hover:bg-slate-700 hover:text-white border-none">
+              View All
+            </Button>
+          </Link>
         </div>
 
         {loading ? (
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6 animate-pulse">
              {[...Array(10)].map((_, i) => (
-                <div key={i} className="aspect-[3/4] bg-slate-900 rounded-md"></div>
+                <div key={i} className="aspect-3/4 bg-slate-900 rounded-md"></div>
              ))}
           </div>
         ) : (

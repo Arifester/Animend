@@ -9,6 +9,10 @@ const Register = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (formData.password.length < 6) {
+                alert("Password must be at least 6 characters!");
+                return;
+            }
         try {
             const response = await fetch("http://localhost:5000/api/auth/register", {
                 method: "POST",

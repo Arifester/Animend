@@ -43,7 +43,7 @@ const Search = () => {
         {loading ? (
             <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6 animate-pulse">
                 {[...Array(10)].map((_, i) => (
-                    <div key={i} className="aspect-[3/4] bg-slate-900 rounded-md"></div>
+                    <div key={i} className="aspect-3/4 bg-slate-900 rounded-md"></div>
                 ))}
             </div>
         ) : animeList.length > 0 ? (
