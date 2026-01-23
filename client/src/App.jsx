@@ -5,6 +5,7 @@ import AnimeDetail from "@/pages/AnimeDetail"
 import Search from "@/pages/Search"
 import Login from "@/pages/Login"
 import Register from "@/pages/Register"
+import Wishlist from "@/pages/Wishlist";
 
 function App() {
   const currentYear = new Date().getFullYear();
@@ -24,6 +25,9 @@ function App() {
         {/* Auth Routes */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+
+        {/* Protected Route for Wishlist */}
+        <Route path="/wishlist" element={<Wishlist />} />
       </Routes>
       
       <footer className="py-8 text-center border-t border-slate-900 mt-auto">
