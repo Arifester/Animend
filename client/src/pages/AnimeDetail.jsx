@@ -21,7 +21,7 @@ const AnimeDetail = () => {
         setAnime(data.data);
         setLoading(false);
       } catch (error) {
-        console.error("Gagal mengambil detail anime:", error);
+        console.error("Failed to fetch anime details:", error);
         setLoading(false);
       }
     };
@@ -29,6 +29,12 @@ const AnimeDetail = () => {
     fetchAnimeDetail();
     window.scrollTo(0, 0);
   }, [id]);
+
+  useEffect(() => {
+    if (anime) {
+        document.title = `${anime.title} | Animend`;
+    }
+  }, [anime]);
 
   const handleAddToWishlist = async () => {
     if (!token) {
