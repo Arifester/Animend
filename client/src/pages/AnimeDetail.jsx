@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { useAuth } from "@/context/AuthContext"
+import { toast } from "sonner"
 
 const AnimeDetail = () => {
   const { id } = useParams();
@@ -38,7 +39,9 @@ const AnimeDetail = () => {
 
   const handleAddToWishlist = async () => {
     if (!token) {
-        alert("Please login first to save this anime!");
+        toast.error("Access Denied", {
+            description: "Please login to save this anime.",
+        });
         return;
     }
 
@@ -65,9 +68,17 @@ const AnimeDetail = () => {
         const data = await response.json();
 
         if (response.ok) {
-            alert("Success! Added to your wishlist.");
+            toast.success("Added to Wishlist", {
+                description: `${anime.title} has been saved.`,
+                action: {
+                    label: "Undo",
+                    onClick: () => console.log("Undo clicked"),
+                },
+            });
         } else {
-            alert(data.message || "Failed to add.");
+           toast.warning("Warning", {
+                description: data.message || "Failed to add.",
+            });
         }
     } catch (error) {
         console.error("Wishlist error:", error);
