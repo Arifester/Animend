@@ -37,8 +37,14 @@ function App() {
           &copy; {currentYear} Animend Project
         </p>
       </footer>
-      
-      <Toaster position="bottom-right" theme="dark" />
+
+      <Toaster 
+        position="bottom-right" 
+        theme="dark"
+        richColors
+        duration={1500}
+        closeButton
+      />
     </div>
   )
 }

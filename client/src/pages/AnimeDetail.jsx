@@ -70,9 +70,30 @@ const AnimeDetail = () => {
         if (response.ok) {
             toast.success("Added to Wishlist", {
                 description: `${anime.title} has been saved.`,
+                actionButtonStyle: {
+                  backgroundColor: "white",
+                  color: "black",
+                  fontWeight: "bold"
+                },
                 action: {
                     label: "Undo",
-                    onClick: () => console.log("Undo clicked"),
+                    onClick: async () => {
+                        try {
+                            const undoResponse = await fetch(`http://localhost:5000/api/anime/wishlist/${anime.mal_id}`, {
+                                method: "DELETE",
+                                headers: { "Authorization": `Bearer ${token}` }
+                            });
+                            
+                            if(undoResponse.ok) {
+                                toast.info("Action Undone", {
+                                    description: "Item removed from wishlist.",
+                                    duration: 1500
+                                });
+                            }
+                        } catch (err) {
+                            console.error("Undo failed", err);
+                        }
+                    },
                 },
             });
         } else {
@@ -82,7 +103,7 @@ const AnimeDetail = () => {
         }
     } catch (error) {
         console.error("Wishlist error:", error);
-        alert("Something went wrong.");
+        toast.error("Something went wrong.");
     }
   };
 
