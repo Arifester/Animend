@@ -2,18 +2,26 @@ import { useState } from "react"
 import { useNavigate, Link } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { useAuth } from "@/context/AuthContext" // Import Auth Hook
+import { useAuth } from "@/context/AuthContext"
+import { toast } from "sonner"
 
 const Navbar = () => {
   const [query, setQuery] = useState("");
   const navigate = useNavigate();
-  const { user, logout } = useAuth(); // Get user data and logout function
+  const { user, logout } = useAuth();
 
-  const handleSearch = (e) => {
-    // If the Enter key is pressed and the text is not empty
+const handleLogout = () => {
+    logout();
+    toast.info("Logged Out", {
+        description: "See you next time!",
+        duration: 1500
+    });
+};
+
+const handleSearch = (e) => {
     if (e.key === 'Enter' && query.trim() !== "") {
-      navigate(`/search/${query}`); // Move to page /search/naruto
-      setQuery(""); // Empty input fields after search
+      navigate(`/search/${query}`);
+      setQuery("");
     }
   }
 
@@ -57,7 +65,7 @@ const Navbar = () => {
                         <span className="text-slate-300 font-bold uppercase tracking-widest text-[10px]">
                             {user.username}
                         </span>
-                        <Button onClick={logout} variant="ghost" className="text-red-400 hover:text-red-300 hover:bg-red-950/30 text-xs">
+                        <Button onClick={handleLogout} variant="ghost" className="text-red-400 hover:text-red-300 hover:bg-red-950/30 text-xs">
                             Logout
                         </Button>
                     </div>
